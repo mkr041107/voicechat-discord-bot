@@ -1,0 +1,4 @@
+{
+  "name": "Voice Chat Discord Bot",
+  "install": "npm ci && npm run build"
+}
