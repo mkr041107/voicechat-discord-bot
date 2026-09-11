@@ -6,7 +6,7 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
-import { categories } from "../content.js";
+import { categories, downloadLinks } from "../content.js";
 
 export const BUTTON_PREFIX = "vc:";
 
@@ -39,6 +39,8 @@ export function buildHelpEmbed(): EmbedBuilder {
         "🔌 **Install — Server Plugins** — Bukkit/Spigot/Paper and proxy plugins",
         "🎙️ **Client Setup** — Microphone, speakers, and push-to-talk (v2.5.2+)",
         "",
+        `**Downloads:** [Modrinth](${downloadLinks.modrinth.mod}) · [CurseForge](${downloadLinks.curseforge.mod})`,
+        "",
         "Source: [modrepo.de/minecraft/voicechat/wiki](https://modrepo.de/minecraft/voicechat/wiki/installation)",
       ].join("\n"),
     )
@@ -46,10 +48,10 @@ export function buildHelpEmbed(): EmbedBuilder {
 }
 
 export function buildHelpButtons(): ActionRowBuilder<ButtonBuilder>[] {
-  const row = new ActionRowBuilder<ButtonBuilder>();
+  const guideRow = new ActionRowBuilder<ButtonBuilder>();
 
   for (const category of categories) {
-    row.addComponents(
+    guideRow.addComponents(
       new ButtonBuilder()
         .setCustomId(categoryButtonId(category.id))
         .setLabel(category.label)
@@ -58,7 +60,20 @@ export function buildHelpButtons(): ActionRowBuilder<ButtonBuilder>[] {
     );
   }
 
-  return [row];
+  const downloadRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
+      .setLabel("Modrinth")
+      .setEmoji("📦")
+      .setStyle(ButtonStyle.Link)
+      .setURL(downloadLinks.modrinth.mod),
+    new ButtonBuilder()
+      .setLabel("CurseForge")
+      .setEmoji("🔥")
+      .setStyle(ButtonStyle.Link)
+      .setURL(downloadLinks.curseforge.mod),
+  );
+
+  return [guideRow, downloadRow];
 }
 
 export async function execute(

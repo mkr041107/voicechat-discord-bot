@@ -6,6 +6,26 @@ export interface VoiceChatCategory {
   text: string;
 }
 
+/** Official download pages — pick Minecraft version and loader on the site. */
+export const downloadLinks = {
+  modrinth: {
+    mod: "https://modrinth.com/mod/simple-voice-chat",
+    plugin: "https://modrinth.com/plugin/simple-voice-chat",
+  },
+  curseforge: {
+    mod: "https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat",
+    plugin: "https://www.curseforge.com/minecraft/bukkit-plugins/simple-voice-chat",
+  },
+} as const;
+
+const modDownloadBlock = `**Downloads** (pick your Minecraft version & loader on the site)
+• [Modrinth — mod](${downloadLinks.modrinth.mod})
+• [CurseForge — mod](${downloadLinks.curseforge.mod})`;
+
+const pluginDownloadBlock = `**Downloads** (pick your Minecraft version on the site)
+• [Modrinth — plugin](${downloadLinks.modrinth.plugin})
+• [CurseForge — plugin](${downloadLinks.curseforge.plugin})`;
+
 export const categories: VoiceChatCategory[] = [
   {
     id: "install-loaders",
@@ -18,6 +38,8 @@ export const categories: VoiceChatCategory[] = [
 You must install Simple Voice Chat on **both** the client and the server. Skipping the client install still lets you join, but you won't be able to use any voice features.
 
 All loaders are cross-compatible with each other — the loader choice just has to match what your client/server already runs.
+
+${modDownloadBlock}
 
 **Fabric**
 > Requires the Fabric Loader installed on client/server.
@@ -44,6 +66,10 @@ Copy the **Quilt** build of the mod jar into your \`/mods\` folder.
     title: "Installation — Bukkit / Proxy Plugins",
     text: `**🔌 INSTALLATION — SERVER & PROXY PLUGINS**
 *(Bukkit / Spigot / Paper · Velocity / BungeeCord / Waterfall)*
+
+${pluginDownloadBlock}
+
+Proxy builds (Velocity / BungeeCord / Waterfall) are on the Modrinth mod page — filter by loader.
 
 **Bukkit / Spigot / Paper**
 Drop the Simple Voice Chat **plugin** jar into your server's \`/plugins\` folder.
