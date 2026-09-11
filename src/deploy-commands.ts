@@ -1,14 +1,20 @@
-import "dotenv/config";
 import { REST, Routes } from "discord.js";
 import { data as helpCommand } from "./commands/help.js";
+import {
+  explainMissingGuildId,
+  loadProjectEnv,
+  readGuildIdFromEnv,
+} from "./load-env.js";
+
+const envPath = loadProjectEnv();
 
 const token = process.env.DISCORD_TOKEN?.trim();
 const clientId = process.env.DISCORD_CLIENT_ID?.trim();
-const rawGuildId = process.env.DISCORD_GUILD_ID?.trim().replace(/^["']|["']$/g, "");
+const rawGuildId = readGuildIdFromEnv();
 
 if (!token || !clientId) {
   throw new Error(
-    "Missing DISCORD_TOKEN or DISCORD_CLIENT_ID. Copy .env.example to .env and fill in your bot credentials.",
+    `Missing DISCORD_TOKEN or DISCORD_CLIENT_ID.\nExpected .env at:\n  ${envPath}`,
   );
 }
 
@@ -25,6 +31,10 @@ function parseGuildId(value: string | undefined): string | undefined {
 }
 
 const guildId = parseGuildId(rawGuildId);
+
+if (!guildId) {
+  explainMissingGuildId(envPath);
+}
 
 const rest = new REST({ version: "10" }).setToken(token);
 const body = [helpCommand.toJSON()];
@@ -54,5 +64,5 @@ try {
 console.log(
   guildId
     ? `Registered /help for guild ${guildId} (should appear immediately in that server)`
-    : `Registered /help globally (may take up to an hour). Set DISCORD_GUILD_ID in .env for instant guild registration.`,
+    : "Registered /help globally (may take up to an hour). Set DISCORD_GUILD_ID in .env for instant guild registration.",
 );

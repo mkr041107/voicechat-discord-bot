@@ -1,9 +1,11 @@
-import "dotenv/config";
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { BotClient } from "./client.js";
 import { data as helpData, execute as helpExecute } from "./commands/help.js";
+import { loadProjectEnv } from "./load-env.js";
+
+loadProjectEnv();
 
 const token = process.env.DISCORD_TOKEN;
 
@@ -13,12 +15,12 @@ if (!token) {
   );
 }
 
-const rootDir = fileURLToPath(new URL(".", import.meta.url));
+const moduleDir = fileURLToPath(new URL(".", import.meta.url));
 const client = new BotClient();
 
 client.commands.set(helpData.name, { data: helpData, execute: helpExecute });
 
-const eventsPath = join(rootDir, "events");
+const eventsPath = join(moduleDir, "events");
 for (const file of readdirSync(eventsPath).filter((f) => f.endsWith(".ts") || f.endsWith(".js"))) {
   const event = await import(pathToFileURL(join(eventsPath, file)).href);
   const handler = (...args: unknown[]) => event.default.execute(...args, client);
