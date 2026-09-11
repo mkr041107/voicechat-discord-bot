@@ -1,0 +1,358 @@
+<title>Voice Chat Setup Reference</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#f3f2ee;
+  --surface:#ffffff;
+  --surface-2:#eceae3;
+  --border:#dcd9cf;
+  --text:#232019;
+  --text-dim:#6b6659;
+  --accent:#1f8a70;
+  --accent-ink:#f4fbf8;
+  --accent-2:#c26a1d;
+  --code-bg:#1c2620;
+  --code-text:#d9ecdf;
+  --code-border:#2d3b32;
+  --shadow: 0 1px 2px rgba(30,26,16,.06), 0 8px 20px -12px rgba(30,26,16,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12140f;
+    --surface:#1a1d16;
+    --surface-2:#20241b;
+    --border:#31362a;
+    --text:#eceee6;
+    --text-dim:#9ba192;
+    --accent:#4fc3a1;
+    --accent-ink:#08120e;
+    --accent-2:#e0973f;
+    --code-bg:#0e1512;
+    --code-text:#cdeadb;
+    --code-border:#243128;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12140f;
+  --surface:#1a1d16;
+  --surface-2:#20241b;
+  --border:#31362a;
+  --text:#eceee6;
+  --text-dim:#9ba192;
+  --accent:#4fc3a1;
+  --accent-ink:#08120e;
+  --accent-2:#e0973f;
+  --code-bg:#0e1512;
+  --code-text:#cdeadb;
+  --code-border:#243128;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Manrope',system-ui,sans-serif;
+  margin:0;
+  padding-inline:20px;
+  padding-block:28px 48px;
+}
+.wrap{max-width:980px;margin:0 auto;}
+
+header{margin-bottom:28px;}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;}
+h1{
+  font-size:clamp(26px,4vw,36px);
+  margin:8px 0 8px;
+  font-weight:800;
+  letter-spacing:-0.01em;
+  text-wrap:balance;
+}
+.sub{color:var(--text-dim);font-size:15px;max-width:65ch;line-height:1.55;margin:0;}
+
+.panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  margin-top:22px;
+  box-shadow:var(--shadow);
+}
+.panel-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--text-dim);
+  margin:0 0 12px;
+}
+
+.btn-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:10px;
+}
+.cat-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  color:var(--text);
+  font-family:'Manrope',sans-serif;
+  font-size:13.5px;
+  font-weight:600;
+  cursor:pointer;
+  text-align:left;
+  transition:border-color .15s ease, transform .1s ease, background .15s ease;
+}
+.cat-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+.cat-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.cat-btn.active{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:var(--accent-ink);
+}
+.cat-btn .ico{font-size:17px;line-height:1;}
+.cat-btn .n{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  opacity:.65;
+  margin-left:auto;
+}
+
+.output-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+.output-title{
+  font-weight:700;
+  font-size:15px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.copy-btn{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  font-weight:600;
+  border:1px solid var(--accent);
+  background:transparent;
+  color:var(--accent);
+  padding:7px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+  white-space:nowrap;
+}
+.copy-btn:hover{background:var(--accent);color:var(--accent-ink);}
+.copy-btn.copied{background:var(--accent);color:var(--accent-ink);}
+
+textarea{
+  width:100%;
+  min-height:340px;
+  resize:vertical;
+  background:var(--code-bg);
+  color:var(--code-text);
+  border:1px solid var(--code-border);
+  border-radius:10px;
+  padding:16px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12.5px;
+  line-height:1.6;
+  white-space:pre;
+  overflow:auto;
+}
+textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+
+.hint{
+  font-size:12.5px;
+  color:var(--text-dim);
+  margin-top:10px;
+  line-height:1.5;
+}
+.hint code{
+  font-family:'JetBrains Mono',monospace;
+  background:var(--surface-2);
+  padding:1px 5px;
+  border-radius:4px;
+  border:1px solid var(--border);
+}
+
+footer{
+  margin-top:26px;
+  font-size:12px;
+  color:var(--text-dim);
+  text-align:center;
+}
+footer a{color:var(--accent);}
+
+@media (max-width:520px){
+  .btn-grid{grid-template-columns:1fr 1fr;}
+  .cat-btn .n{display:none;}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Simple Voice Chat &middot; Wiki digest</p>
+    <h1>Setup &amp; Installation Reference</h1>
+    <p class="sub">Pulled from the official wiki's Installation and Client Setup pages (server setup intentionally excluded). Each category below is pre-formatted Discord markdown — pick one, hit copy, and drop it straight into an embed or a button's response.</p>
+  </header>
+
+  <div class="panel">
+    <p class="panel-label">01 &mdash; Categories (map 1:1 to Discord buttons)</p>
+    <div class="btn-grid" id="catGrid"></div>
+  </div>
+
+  <div class="panel">
+    <div class="output-head">
+      <div class="output-title"><span id="outIcon">📥</span><span id="outTitle">Installation &mdash; Mod Loaders</span></div>
+      <button class="copy-btn" id="copyBtn">Copy to clipboard</button>
+    </div>
+    <textarea id="outputBox" readonly spellcheck="false"></textarea>
+    <p class="hint">Formatted for Discord: <code>**bold**</code>, <code>\`code\`</code>, and triple-backtick blocks render natively when pasted into a message or an embed <code>description</code> field (2048-char limit per embed &mdash; the longer sections here fit under that).</p>
+  </div>
+
+  <footer>Source: <a href="https://modrepo.de/minecraft/voicechat/wiki/installation" target="_blank" rel="noopener">modrepo.de/minecraft/voicechat/wiki</a></footer>
+</div>
+
+<script>
+const categories = [
+  {
+    id: "install-loaders",
+    icon: "📥",
+    label: "Install — Loaders",
+    title: "Installation — Mod Loaders",
+    text: `**📥 INSTALLATION — MOD LOADERS**
+*(Fabric / NeoForge / Forge / Quilt)*
+
+You must install Simple Voice Chat on **both** the client and the server. Skipping the client install still lets you join, but you won't be able to use any voice features.
+
+All loaders are cross-compatible with each other — the loader choice just has to match what your client/server already runs.
+
+**Fabric**
+> Requires the Fabric Loader installed on client/server.
+Copy the **Fabric** build of the mod jar into your \`/mods\` folder.
+
+**NeoForge**
+> Requires NeoForge installed on client/server.
+Copy the **NeoForge** build of the mod jar into your \`/mods\` folder.
+
+**Forge**
+> Requires Forge installed on client/server.
+Copy the **Forge** build of the mod jar into your \`/mods\` folder.
+
+**Quilt**
+> Requires the Quilt Loader installed on client/server.
+Copy the **Quilt** build of the mod jar into your \`/mods\` folder.
+
+⚠️ **Note:** If you hit loader-specific issues (Fabric/Forge/etc. itself crashing, not the mod), ask in that loader's own Discord — not Simple Voice Chat support.`
+  },
+  {
+    id: "install-plugins",
+    icon: "🔌",
+    label: "Install — Server Plugins",
+    title: "Installation — Bukkit / Proxy Plugins",
+    text: `**🔌 INSTALLATION — SERVER & PROXY PLUGINS**
+*(Bukkit / Spigot / Paper · Velocity / BungeeCord / Waterfall)*
+
+**Bukkit / Spigot / Paper**
+Drop the Simple Voice Chat **plugin** jar into your server's \`/plugins\` folder.
+
+⚠️ **Important:** Players still need the Fabric, NeoForge, Forge, or Quilt **mod** installed on their client — the Bukkit/Spigot/Paper plugin only handles the server side.
+
+**Velocity / BungeeCord / Waterfall (proxy)**
+Drop the Simple Voice Chat **proxy plugin** jar into your proxy's \`/plugins\` folder.
+
+⚠️ **Important:** You still need the mod/plugin installed on each backend Minecraft server behind the proxy.`
+  },
+  {
+    id: "client-setup",
+    icon: "🎙️",
+    label: "Client Setup",
+    title: "Client Setup (v2.5.2+)",
+    text: `**🎙️ CLIENT SETUP**
+*(Version 2.5.2 and later)*
+
+Since v2.5.2 the mod ships with an onboarding guide.
+
+**Steps:**
+1. Install the mod and join any server or singleplayer world.
+2. You'll get a chat message saying voice chat needs to be set up.
+3. Press **V** to open the setup guide.
+4. The guide walks you through:
+   • Selecting your microphone device
+   • Selecting your speaker device
+   • Choosing activation mode — **Push to Talk** or **Voice Activation**
+   • Setting a push-to-talk keybind
+   • Adjusting your mic's voice activation sensitivity
+
+💡 You can reopen/redo this guide any time from the mod's settings if your audio devices change.`
+  },
+];
+
+const grid = document.getElementById('catGrid');
+const outputBox = document.getElementById('outputBox');
+const outTitle = document.getElementById('outTitle');
+const outIcon = document.getElementById('outIcon');
+const copyBtn = document.getElementById('copyBtn');
+
+let activeId = categories[0].id;
+
+function render(){
+  grid.innerHTML = '';
+  categories.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.className = 'cat-btn' + (c.id === activeId ? ' active' : '');
+    b.innerHTML = `<span class="ico">${c.icon}</span><span>${c.label}</span><span class="n">0${i+1}</span>`;
+    b.addEventListener('click', () => selectCategory(c.id));
+    grid.appendChild(b);
+  });
+  const cat = categories.find(c => c.id === activeId);
+  outTitle.textContent = cat.title;
+  outIcon.textContent = cat.icon;
+  outputBox.value = cat.text;
+}
+
+function selectCategory(id){
+  activeId = id;
+  render();
+}
+
+copyBtn.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(outputBox.value);
+  }catch(e){
+    outputBox.select();
+    document.execCommand('copy');
+  }
+  copyBtn.textContent = 'Copied ✓';
+  copyBtn.classList.add('copied');
+  setTimeout(() => {
+    copyBtn.textContent = 'Copy to clipboard';
+    copyBtn.classList.remove('copied');
+  }, 1400);
+});
+
+render();
+</script>
