@@ -3,25 +3,27 @@
   "version": "1.0.0",
   "description": "Discord bot with /help and buttons for Simple Voice Chat setup guides",
   "type": "module",
-  "main": "dist/index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
+    "postinstall": "npm run build",
     "start": "node dist/index.js",
+    "start:ts": "tsx src/index.ts",
     "deploy-commands": "tsx src/deploy-commands.ts"
   },
   "repository": {
     "type": "git",
-    "url": "https://origin.cursor.com/git/matthew-russell/tmp-1ba479d31c0185ee.git"
+    "url": "https://github.com/mkr041107/voicechat-discord-bot.git"
   },
   "keywords": ["discord", "bot", "simple-voice-chat", "minecraft"],
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.27.0",
-    "dotenv": "^17.4.2"
-  },
-  "devDependencies": {
     "@types/node": "^22.20.2",
+    "discord.js": "^14.27.0",
+    "dotenv": "^17.4.2",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   }

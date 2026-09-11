@@ -79,3 +79,23 @@ src/
 ```
 
 Built with the [discord-skill](https://github.com/ItsChakal/discord-skill) patterns (discord.js v14).
+
+## Bot hosting (FadeHost, Bot-Hosting.net, etc.)
+
+Set these **environment variables** on the host:
+
+| Variable | Required |
+|----------|----------|
+| `DISCORD_TOKEN` | Yes |
+| `DISCORD_CLIENT_ID` | Yes |
+| `DISCORD_GUILD_ID` | No |
+
+**Start command:** `npm start` (default)
+
+If the host skips the TypeScript build and `dist/` is missing, use this start command instead:
+
+```bash
+npm run start:ts
+```
+
+After the first deploy, run **`npm run deploy-commands` once** in the host console to register `/help`.
